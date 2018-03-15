@@ -11,8 +11,8 @@ const main = () => {
 //deal cards -- need two cards and check the card not used again
 
 const playGame = () => {
-  deal();
   console.log("I am at play game");
+  deal();
 }
 
 //   // 4 suits ....
@@ -27,33 +27,41 @@ const deal = () => {
 
     playerArray.push(card1);
     playerArray.push(card2);
-
   }
 
   console.log("this is after player push");
+  checkCard(playerArray);
   console.log(playerArray);
-  console.log("at end of deal" + playerArray);
 
-  for (var i = 0; i <= 1; i++) {
+  for (var i = 0; i < 1; i++) {
     let card1 = (Math.ceil(Math.random() * Math.ceil(52)) % 13)
     let card2 = (Math.ceil(Math.random() * Math.ceil(52)) % 13)
 
-  
-
-  computerArray.push(card1);
-  computerArray.push(card2);
+    computerArray.push(card1);
+    computerArray.push(card2);
   }
 
   console.log("this is after computer push");
+
+
   console.log(computerArray);
-  
-  
   console.log(playerArray, computerArray);
+  checkCard(computerArray);
   playerHands(playerArray, computerArray);
-  
-  // return computerArray;
+
 }
 
+
+const checkCard = (array) => {
+  for (var i = 0; i < array.length; i++) {
+    if (array[i] === 0 || array[i] === 11 || array[i] === 12) {
+      array[i] = 10;
+    }
+    else if (array[i] === 1) {
+      array[i] = 11;
+    }
+  }
+}
 // const hand= (card1, card2)=>{
 //   playerhand = {
 //     card1 = '',
@@ -74,18 +82,12 @@ const playerHands = (PlayerHand, ComputerHand) => {
   const _computerHandSection = document.createElement("section");
   _computerHandSection.textContent = "Dealer cards are:" + ComputerHand;
   document.querySelector(".dealer-hand").appendChild(_computerHandSection);
-
 }
 
+const playerMoves = {
 
-
-const game = {
 
 };
-
-
-// console.log(finalCard)
-
 // (a) Let's say that scores between 1 and 13 represent Hearts.
 
 // (b) Let's say that scores between 14 to 26 represent Diamonds.
@@ -98,8 +100,6 @@ const game = {
 //     finalCard = 10
 //   }
 // }
-
-
 
 
 // const displayHands
