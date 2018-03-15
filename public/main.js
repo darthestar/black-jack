@@ -1,5 +1,130 @@
 const main = () => {
-  document.querySelector('h1').textContent += '?'
 }
+
+
+
+
+//make a deck
+//52 cards
+//create players, player and computer
+
+//deal cards -- need two cards and check the card not used again
+
+const playGame = () => {
+  deal();
+  console.log("I am at play game");
+}
+
+//   // 4 suits ....
+const deal = () => {
+
+  let playerArray = [];
+  let computerArray = [];
+
+  for (var i = 0; i < 1; i++) {
+    let card1 = (Math.ceil(Math.random() * Math.ceil(52)) % 13)
+    let card2 = (Math.ceil(Math.random() * Math.ceil(52)) % 13)
+
+    playerArray.push(card1);
+    playerArray.push(card2);
+
+  }
+
+  console.log("this is after player push");
+  console.log(playerArray);
+  console.log("at end of deal" + playerArray);
+
+  for (var i = 0; i <= 1; i++) {
+    let card1 = (Math.ceil(Math.random() * Math.ceil(52)) % 13)
+    let card2 = (Math.ceil(Math.random() * Math.ceil(52)) % 13)
+
+  
+
+  computerArray.push(card1);
+  computerArray.push(card2);
+  }
+
+  console.log("this is after computer push");
+  console.log(computerArray);
+  
+  
+  console.log(playerArray, computerArray);
+  playerHands(playerArray, computerArray);
+  
+  // return computerArray;
+}
+
+// const hand= (card1, card2)=>{
+//   playerhand = {
+//     card1 = '',
+//     card2 = '',
+//   }
+
+//-- create player and computer hands- get cards
+
+const playerHands = (PlayerHand, ComputerHand) => {
+  console.log("Player hands function")
+  let playerhand = PlayerHand;
+  let computerhand = ComputerHand;
+
+  const _playerHandSection = document.createElement("section");
+  _playerHandSection.textContent = "Your cards are: " + PlayerHand;
+  document.querySelector(".player-hand").appendChild(_playerHandSection);
+
+  const _computerHandSection = document.createElement("section");
+  _computerHandSection.textContent = "Dealer cards are:" + ComputerHand;
+  document.querySelector(".dealer-hand").appendChild(_computerHandSection);
+
+}
+
+
+
+const game = {
+
+};
+
+
+// console.log(finalCard)
+
+// (a) Let's say that scores between 1 and 13 represent Hearts.
+
+// (b) Let's say that scores between 14 to 26 represent Diamonds.
+
+// (c) Let's say that scores between 27 to 39 represent Clubs.
+
+// (d) Let's say that scores between 40 to 52 represent Spades.
+// const assign10Value = (finalCard) => {
+//   if (finalCard === 0 || finalCard === 11 || finalCard === 12) {
+//     finalCard = 10
+//   }
+// }
+
+
+
+
+// const displayHands
+//-- 2 cards face down to dealer, 2 cards face up to player
+//-- buttons to' hit or stay for player
+
+
+//-- //play the game 
+//-- player decides to hit, or stay 
+//--calculate hand score--  bust? - game over?
+//twoRandomScores=()=>{
+//   let score1= Math.random()*10;
+//   let score2 = Math.random()*10;
+
+//   let sum = score1 + score2;
+//   return sum;
+// }
+
+//--  computer hits until it reaches 18 or busts
+//--calculate hand score--  bust? - game over?
+
+//display results -- winner, who is closest to 21
+
+
+//--button to play again, reset hands and reshuffle
+
 
 document.addEventListener('DOMContentLoaded', main)
