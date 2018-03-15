@@ -51,7 +51,6 @@ const deal = () => {
 
 }
 
-
 const checkCard = (array) => {
   for (var i = 0; i < array.length; i++) {
     if (array[i] === 0 || array[i] === 11 || array[i] === 12) {
@@ -62,13 +61,15 @@ const checkCard = (array) => {
     }
   }
 }
-// const hand= (card1, card2)=>{
 //   playerhand = {
 //     card1 = '',
 //     card2 = '',
 //   }
 
-//-- create player and computer hands- get cards
+//-- create player and computer hands
+// const displayHands
+//-- 2 cards face down to dealer, 2 cards face up to player
+//-- buttons to' hit or stay for player
 
 const playerHands = (PlayerHand, ComputerHand) => {
   console.log("Player hands function")
@@ -82,12 +83,8 @@ const playerHands = (PlayerHand, ComputerHand) => {
   const _computerHandSection = document.createElement("section");
   _computerHandSection.textContent = "Dealer cards are:" + ComputerHand;
   document.querySelector(".dealer-hand").appendChild(_computerHandSection);
+  scoreCard(PlayerHand, ComputerHand);
 }
-
-const playerMoves = {
-
-
-};
 // (a) Let's say that scores between 1 and 13 represent Hearts.
 
 // (b) Let's say that scores between 14 to 26 represent Diamonds.
@@ -102,9 +99,18 @@ const playerMoves = {
 // }
 
 
-// const displayHands
-//-- 2 cards face down to dealer, 2 cards face up to player
-//-- buttons to' hit or stay for player
+
+const scoreCard = (PlayerHand, ComputerHand) => {
+  let playerHandSum = 0;
+  for (var i = 0; i < 2; i++) {
+    playerHandSum += PlayerHand[i];
+  }
+  console.log("hand sum" + playerHandSum)
+  const _playerHandSection = document.createElement("section");
+  _playerHandSection.textContent = "Card total is " + playerHandSum + " -Hit or Stay? \r\n" ;
+  document.querySelector(".player-hand").appendChild(_playerHandSection);
+};
+
 
 
 //-- //play the game 
