@@ -10,6 +10,7 @@ body {
 }
 
 
+
 .header-top{
 display:flex;
 flex-direction: column;
@@ -35,6 +36,7 @@ margin: 1em 0em;
     flex-direction: row;
     align-content: center;
    justify-content: space-around;
+   
   }
   
 .dealer-container{
@@ -56,8 +58,21 @@ margin: 1em 0em;
 .player-cards{
   font-size: 14px;
  padding: 3em 0em;
+ 
 }
 
-.player-buttons{
-  
+.player-hand{
+  border: 2px dashed white;
+  padding: 1em;
+
+}
+
+.dealer-hand{
+  border: 2px dashed white;
+  padding: 1em;
+}
+
+.bust{
+  color: red;
+  font-family: fantasy;
 }
