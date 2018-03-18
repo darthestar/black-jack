@@ -8,11 +8,25 @@ const main = () => {
 //52 cards
 //create players, player and computer
 //deal cards -- need two cards and check the card not used again
+const computerPlayButton = document.querySelector(".play");
+const hitButton = document.querySelector(".hit");
+const stayButton = document.querySelector(".stay");
+
+const hidePlay = () => {
+  computerPlayButton.classList.add("hide");
+  
+}
+
+const hidePlayerButtons=()=>{
+  stayButton.classList.add("hide");
+  hitButton.classList.add("hide");
+}
 
 const playGame = () => {
   console.log("I am at play game");
   deal();
 }
+let computerhand = [];
 
 const deal = () => {
   let playerArray = [];
@@ -37,7 +51,9 @@ const deal = () => {
   checkCard(computerArray);
   console.log(playerArray, computerArray);
   displayPlayerHand(playerArray)
-  displayComputerHand(computerArray);
+  displayComputerHand();
+  computerhand = computerArray;
+  hidePlay();
 
 }
 
@@ -45,9 +61,9 @@ const checkCard = (array) => {
   for (var i = 0; i < array.length; i++) {
     if (array[i] === 0 || array[i] === 11 || array[i] === 12) {
       array[i] = 10;
-    }
-    else if (array[i] === 1) {
-      array[i] = 11;
+      if (array[i] === 1) {
+        array[i] = 11;
+      }
     }
   }
 }
@@ -64,24 +80,16 @@ const displayPlayerHand = (PlayerHand) => {
   _playerHandSection.textContent = "Your cards are: " + PlayerHand;
   document.querySelector(".player-hand").appendChild(_playerHandSection);
 
-  const _computerHandSection = document.createElement("section");
-  _computerHandSection.textContent = "Dealer cards are:";
-  document.querySelector(".dealer-hand").appendChild(_computerHandSection);
-
   scoreCard(PlayerHand);
 }
 
-let computerhand = [];
 
-const displayComputerHand = (ComputerHand) => {
+const displayComputerHand = () => {
   console.log("Computer hands function")
-  let computerhand = ComputerHand;  
 
   const _computerHandSection = document.createElement("section");
   _computerHandSection.textContent = "Dealer cards are hidden";
   document.querySelector(".dealer-hand").appendChild(_computerHandSection);
-
-  computerhand = ComputerHand;
 }
 // (a) Let's say that scores between 1 and 13 represent Hearts.
 
@@ -96,7 +104,7 @@ const displayComputerHand = (ComputerHand) => {
 //--calculate hand score--  bust? - game over?
 
 let pHand = [];
-let cHand = [];
+// let cHand = [];
 let newHand = [];
 let newHandSum = 0;
 
@@ -132,60 +140,106 @@ const scoreCard = (PlayerHand) => {
   pHand = PlayerHand;
   pHandSum = playerHandSum;
   console.log("this is in score card function bottom for the player" + playerHandSum)
-
 }
 //display results -- after player stands, determine winner, who is closest to 21
 
-computerPlay = (computerhand) => {
-
-  sum(computerhand);
-  let computerHandSum = newHandSum;
+computerPlay = (newComputerHandSum) => {
+  console.log("computer play total = " + newComputerHandSum)
+  let computerHandSum = newComputerHandSum;
 
   if (computerHandSum > 21) {
-    document.createElement("section");
-    _computerHandBusts.textContent = "Dealer busted. Player wins! ";
+    hidePlayerButtons();
+    
+    const _computerTotalSection =
+      document.createElement("section");
+    _computerTotalSection.textContent = "Dealer total is " + computerHandSum;
+    document.querySelector(".dealer-cards").appendChild(_computerTotalSection);
+    cHandSum = computerHandSum;
+    const _computerHandBust =
+      document.querySelector(".dealer-cards").style.color = "darkgreen";
+    const _computerHandBusts = document.createElement("section");
+    _computerHandBusts.textContent = "Dealer busted. Player wins! $$";
     document.querySelector(".dealer-cards").appendChild(_computerHandBusts);
   }
-  else if (computerHandSum === pHandSum) {
-    document.createElement("section");
+  else if (computerHandSum === pHandSum && (computerHandSum >= 18)) {
+    hidePlayerButtons();
+    
+    const _computerTotalSection =
+      document.createElement("section");
+    _computerTotalSection.textContent = "Dealer total is " + computerHandSum;
+    document.querySelector(".dealer-cards").appendChild(_computerTotalSection);
+    cHandSum = computerHandSum;
+    const _computerAndPlayerTie = document.createElement("section");
     _computerAndPlayerTie.textContent = "Dealer and Player tie! ";
     document.querySelector(".dealer-cards").appendChild(_computerAndPlayerTie);
   }
+  else if (computerHandSum > pHandSum && (computerHandSum > 17)) {
+    hidePlayerButtons();
+    
+    const _computerDealerWins =
+      document.querySelector(".dealer-cards").style.color = "red";
+
+    const _computerDealerTotal = document.createElement("section");
+    _computerDealerTotal.textContent = "Dealer total is " + computerHandSum;
+    document.querySelector(".dealer-cards").appendChild(_computerDealerTotal);
+
+    const _computerDealerWin = document.createElement("section");
+    _computerDealerWin.textContent = "Dealer Wins! ";
+    document.querySelector(".dealer-cards").appendChild(_computerDealerWin);
+  }
+
+  else if (computerHandSum < pHandSum && (computerHandSum > 17)) {
+    hidePlayerButtons();
+    
+    const _playerWon =
+      document.querySelector(".dealer-cards").style.color = "darkgreen";
+
+    const _playerWins = document.createElement("section");
+    _playerWins.textContent = "Dealer total is " + computerHandSum;
+    document.querySelector(".dealer-cards").appendChild(_computerDealerTotal);
+
+    const playerWins2 = document.createElement("section");
+    playerWins2.textContent = "Player WINS! ";
+    document.querySelector(".dealer-cards").appendChild(_computerDealerWin);
+  }
+  
   else {
     const _computerHandSection =
       document.querySelector(".dealer-cards").style.backgroundColor = "white";
 
-    document.createElement("section");
-    _computerHandSection.textContent = "Dealer total is " + computerHandSum;
-    document.querySelector(".dealer-cards").appendChild(_computerHandSection);
-    dealerHit();
-
+    const _computerTotalSection =
+      document.createElement("section");
+    _computerTotalSection.textContent = "Dealer total is " + computerHandSum;
+    document.querySelector(".dealer-cards").appendChild(_computerTotalSection);
+    cHandSum = computerHandSum;
+    dealerHit(computerhand);
   }
-  cHandSum = computerHandSum;
 }
 
 
 const stay = () => {
-  computerPlay(computerhand)
+  console.log("this is in stay function, computer hand is = " + computerhand);
+  sum(computerhand);
+  newComputerHandSum = newHandSum;
+  computerPlay(newComputerHandSum);
 }
 
 //after player stands with their hand, computer takes cards according to rules
 //--  computer hits until it reaches 18 or busts
 
-const dealerHit = () => {
-  console.log("this is in the dealer hit function, *****computer hand total = " + cHandSum);
+const dealerHit = (computerhand) => {
+  console.log("this is in the dealer hit function, *****computer hand total = " + cHandSum + "computer cards are " + computerhand);
 
   if (cHandSum <= 18) {
     for (var i = 0; i < 1; i++) {
       let newCard = (Math.ceil(Math.random() * Math.ceil(52)) % 13)
-      cHand.push(newCard);
+      computerhand.push(newCard);
     }
-    console.log(cHand + "= computer hand after getting another card")
-    cHand = ComputerHand;
+    console.log(computerhand + "= computer hand after getting another card")
 
-    checkCard(cHand);
-    displayComputerHand(cHand)
-    computerPlay(cHand);
+    checkCard(computerhand);
+    sum(computerhand);
+    computerPlay(newHandSum);
   }
 }
 
@@ -210,21 +264,27 @@ const hit = () => {
   }
 }
 const bust = () => {
+  hidePlayerButtons();
 
   const _loseMessage = document.createElement("section");
   _loseMessage.textContent = "Sorry you busted!";
   document.querySelector(".bust").appendChild(_loseMessage);
-
 }
 
 const blackJack = () => {
+  hidePlayerButtons();
+  
   const _winMessage = document.createElement("section");
   _winMessage.textContent = "Congratulations you win!";
   document.querySelector(".bust").appendChild(_winMessage);
-
 }
 
 //--button to play again, reset hands and reshuffle
 
+// const hide = () => {
+//   player1Buttons.classList.add("hide");
+//   player2Buttons.classList.add("hide");
+//   computerButton.classList.add("hide");
+// }
 
 document.addEventListener('DOMContentLoaded', main)

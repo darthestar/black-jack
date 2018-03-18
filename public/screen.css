@@ -76,3 +76,7 @@ margin: 1em 0em;
   color: red;
   font-family: fantasy;
 }
+
+.hide{
+  display: none;
+}
